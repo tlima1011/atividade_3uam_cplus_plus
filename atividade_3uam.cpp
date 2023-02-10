@@ -145,6 +145,18 @@ void melhorComprador(c_cliente* c)
 	cout << "Nome do Melhor comprador " << n << " com ano de nascimento " << ano << " no valor de montante de  " << mon << endl;
 }
 
+void montanteCliente(c_cliente* c){ 
+	char n[30];
+	double m; 
+	for(int i = 0; i < 10;i++){ 
+		if(!strcmp(n, (c + i)-> nome))
+		{
+			m += (c + i)->montante;
+		}
+	}
+	cout << "Montante do Cliente " << m << endl; 
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -187,11 +199,12 @@ int main(int argc, char *argv[])
 		case 5:
 			melhorComprador(&cliente[0]);
 			break;
+		case 6: 
+			montanteCliente(&cliente[0]); 
+			break; 	
 		}
-
 	}
 	while(opcao != 7);
-
 
 	return 0;
 }
