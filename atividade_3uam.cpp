@@ -67,52 +67,82 @@ void incluirCliente(c_cliente* c)
 		}
 		if( i >= 10)
 		{
-			cout << "Atingido quantidade máxima de clientes" << endl; 
+			cout << "Atingido quantidade máxima de clientes" << endl;
 			break;
 		}
 	}
 	while(i < 10 || cont == 'n' || cont == 'N');
 }
 
-void listarCliente(c_cliente* c){ 
-	for(int i = 0; i < sizeof(c_cliente) / sizeof(int); i++){
-		cout << "===================================" << endl; 
-		cout << "Dados do " << i + 1 << " cliente" << endl;
-		cout << "===================================" << endl; 
-		if((c+i)-> nome != NULL){
-			cout << "Nome: " << (c + i)->nome << endl; 
-			cout << "Ano Nascimento: " << (c+i)->anoNascimento << endl; 
-			cout << "Montante em R$" << (c+i)->montante << endl;  
+void listarCliente(c_cliente* c)
+{
+	for(int i = 0; i < 10; i++)
+	{
+		if((c + i)-> montante != 0.0)
+		{
+			cout << "===================================" << endl;
+			cout << "Dados do " << i + 1 << " cliente" << endl;
+			cout << "===================================" << endl;
+			cout << "Nome: " << (c + i)->nome << endl;
+			cout << "Ano Nascimento: " << (c + i)->anoNascimento << endl;
+			cout << "Montante em R$" << (c + i)->montante << endl;
 		}
 	}
 }
 
-void removerCliente(c_cliente* c){ 
+void removerCliente(c_cliente* c)
+{
 	char procurar[30];
-	//char procurar[30]; 
+	//char procurar[30];
 	cout << "Informe um nome para remover: ";
-	cin >> procurar; 
-	for(int i = 0; i < sizeof(c_cliente) / sizeof(int); i++){
-		if(!strcmp(procurar, (c + i)-> nome)){ 
-			strcpy((c+i)->nome, "-");
-			(c+i)->anoNascimento = 0; 
-			(c+i)->montante = 0;
-		} 
+	cin >> procurar;
+	for(int i = 0; i < 10; i++)
+	{
+		if(!strcmp(procurar, (c + i)-> nome))
+		{
+			strcpy((c + i)->nome, "-");
+			(c + i)->anoNascimento = 0;
+			(c + i)->montante = 0;
+		}
 	}
 }
 
 
-void zerarMontantes(c_cliente* c){
-	char zerar; 
-	cout << "Deseja zerar montantes? [s][n]" << endl; 
-	cin >> zerar; 
-	if(zerar == 'S' || zerar == 's'){ 
-		for(int i = 0; i < sizeof(c_cliente) / sizeof(int); i++){
-			cout << "Zerando montante do " << i + 1 << " cliente: " << endl; 
-			(c+i)->montante = 0 ;
+void zerarMontantes(c_cliente* c)
+{
+	char zerar;
+	cout << "Deseja zerar montantes? [s][n]" << endl;
+	cin >> zerar;
+	if(zerar == 'S' || zerar == 's')
+	{
+		for(int i = 0; i < 10; i++)
+		{
+			cout << "Zerando montante do " << i + 1 << " cliente: " << endl;
+			(c + i)->montante = 0 ;
 		}
-		cout << "Montantes zerados com sucesso " << endl; 
+		cout << "Montantes zerados com sucesso " << endl;
 	}
+}
+
+void melhorComprador(c_cliente* c)
+{
+	cout << "Melhor Comprador" << endl;
+	char n[30];
+	int ano = 0;
+	double mon = 0;
+	strcpy(n, (c + 0)->nome);
+	ano = (c + 0)->anoNascimento;
+	mon = (c + 0)->montante;
+	for(int i = 1; i < 10; i++)
+	{
+		if((c + i)->montante > mon)
+		{
+			strcpy(n, (c + i)->nome);
+			ano = (c + i)->anoNascimento;
+			mon = (c + i)->montante;
+		}
+	}
+	cout << "Nome do Melhor comprador " << n << " com ano de nascimento " << ano << " no valor de montante de  " << mon << endl;
 }
 
 
@@ -120,13 +150,21 @@ int main(int argc, char *argv[])
 {
 
 	setlocale(LC_ALL, "Portuguese");
-	
+
 	int i = 0;
 	char cont;
 
 	c_cliente cliente[10];
 	c_cliente* c;
 	c = &cliente[0];
+
+	for(int i = 0; i < 10; i++)
+	{
+		//cout << "Zerando montante do " << i + 1 << " cliente: " << endl;
+		strcpy((c + i)->nome, "---");
+		(c + i)->anoNascimento = 0;
+		(c + i)->montante = 0.0;
+	}
 
 	//carregarLista(&cliente);
 	do
@@ -135,20 +173,24 @@ int main(int argc, char *argv[])
 		switch(opcao)
 		{
 		case 1:
-			incluirCliente(&cliente[0]); 	
+			incluirCliente(&cliente[0]);
 			break;
-		case 2: 
+		case 2:
 			listarCliente(&cliente[0]);
-			break; 
-		case 3: 
-			removerCliente(&cliente[0]); 
-			break; 
-		case 4: 
-			zerarMontantes(&cliente[0]); 
-			break; 
+			break;
+		case 3:
+			removerCliente(&cliente[0]);
+			break;
+		case 4:
+			zerarMontantes(&cliente[0]);
+			break;
+		case 5:
+			melhorComprador(&cliente[0]);
+			break;
 		}
 
-	}while(opcao != 7);
+	}
+	while(opcao != 7);
 
 
 	return 0;
