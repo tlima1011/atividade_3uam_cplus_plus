@@ -148,8 +148,10 @@ void melhorComprador(c_cliente* c)
 void montanteCliente(c_cliente* c){ 
 	char n[30];
 	double m; 
+	cout << "Informe um nome para somar:  "; 
+	cin >> n;   
 	for(int i = 0; i < 10;i++){ 
-		if(!strcmp(n, (c + i)-> nome))
+		if(!strcmp(n,(c + i)-> nome))
 		{
 			m += (c + i)->montante;
 		}
